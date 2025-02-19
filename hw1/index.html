@@ -53,15 +53,26 @@ In this homework I implemented a rasterizer that can render vector graphics. Som
 I learned a lot about the rasterization pipeline, and enjoyed the opportunity to get my hands dirty with it. A lot of the pipeline was a black box to me, and most of it isn’t now. I found it interesting to see the tradeoffs between different sampling methods, and I really enjoyed creating my own transforms.
 
 		<h2>Task 1: Drawing Single-Color Triangles</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>I first check whether the triangle is clockwise or counterclockwise. If it’s counterclockwise, I swap the first and third vertex, making the triangle clockwise.</p>
+    <p>I calculate whether the triangle is clockwise or counterclockwise with:</p>
+    <pre><code>(x1-x0)*(y2-y1) - (x2-x1)*(y1-y0) &lt; 0</code></pre>
+    <p>which was shown in discussion. It works by calculating the cross product of two edges.</p>
+    <p>The algorithm only searches through all <code>x</code> between <code>min(x_i)</code> and <code>max(x_i)</code> and all <code>y</code> between <code>min(y_i)</code> and <code>max(y_i)</code>. The bounding box of the rectangle would have diagonal points on <code>(min(x_i), min(y_i))</code>, <code>(max(x_i), max(y_i))</code>, which means that my algorithm is no worse than one that checks each sample within the bounding box of the triangle.</p>
+    <p>In the double for loop, the algorithm at a high level is the following:</p>
+    <ol>
+        <li>Check if the point (accounting for +0.5 offset) is in the triangle (including the edges) by using barycentric coordinates.</li>
+        <li>If it is, the pixel can be colored with the triangle’s color.</li>
+        <li>Move on to the next pixel.</li>
+    </ol>
+    <p>When implementing this, I initially had segfault errors when I zoomed in. I fixed this by adding bound checks before editing the sample buffer.</p>
 
 		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="lion.jpg" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="Task1.png" width="400px"/>
+				  <figcaption>The image is zoomed in on the right vertex of the red triangle</figcaption>
 				</td>
 				<td style="text-align: center;">
 				  <img src="lion.jpg" width="400px"/>
