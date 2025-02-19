@@ -86,7 +86,7 @@ I learned a lot about the rasterization pipeline, and enjoyed the opportunity to
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="task_2_9.png" width="400px"/>
+				  <img src="task-2_9.png" width="400px"/>
 				  <figcaption>Sample rate of 9</figcaption>
 				</td>
 				<td style="text-align: center;">
@@ -105,7 +105,8 @@ I learned a lot about the rasterization pipeline, and enjoyed the opportunity to
 			<figcaption>The figure is waving</figcaption>
 		</figure>
 		<h2>Task 4: Barycentric coordinates</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>Barycentric coordinates describe points in <span class="math">\mathbb{R}^2</span> as the interpolation of a triangle’s three vertices. Every point in <span class="math">\mathbb{R}^2</span> can be described as <span class="math">(\alpha, \beta, \gamma)</span>, where <span class="math">\alpha + \beta + \gamma = 1</span>, and <span class="math">\alpha X_1 + \beta X_2 + \gamma X_3 = P</span>, where <span class="math">P</span> is the point in question. If <span class="math">\alpha, \beta, \gamma \geq 0</span>, a point must be inside the triangle.</p>
+    <p>I already used barycentric coordinates because of this property, so adding interpolation for colour was quite easy – I just had to weight each vertex’s colour by its respective barycentric coordinate.</p>
 		
 		<figure>
 			<img src="Task4.png" alt="Lion" style="width:50%"/>
