@@ -210,7 +210,7 @@ I learned a lot about the rasterization pipeline, and enjoyed the opportunity to
 
     <h2>L_ZERO + P_NEAREST</h2>
     <p>This image arguably looks the best, as the edges are better defined. It seems that P_NEAREST is the best pixel sampling approach to use because it increases the sharpness of the lettering.</p>
-    <p>This was an interesting experiment for me because I assumed that linear interpolation would always be superior, but this clearly isn’t the case when we want to increase the sharpness of an object. In general, nearest-neighbor sampling is the fastest and has relatively inexpensive memory requirements. Its downside is block-like artifacts (but this isn’t always a bad thing, as shown above). Bilinear sampling can result in better image quality due to its anti-aliasing effects, but it requires more computation, as more linear interpolation is required.</p>
+    <p>This was an interesting experiment for me because I assumed that linear interpolation would always be superior, but this clearly isn’t the case when we want to increase the sharpness of an object. In general, nearest-neighbor sampling is the fastest and has relatively inexpensive memory requirements. Its downside is block-like artifacts (but this isn’t always a bad thing, as shown above). Bilinear sampling can result in better image quality due to its anti-aliasing effects, but it requires more computation, as more linear interpolation is required. Level sampling requires both more memory and computational power (if bilinear level sampling is implemented). The additionally memory overhead is bounded, though, as it's a geometric series with a ratio of half. </p>
 		</div>
 	</body>
 </html>
