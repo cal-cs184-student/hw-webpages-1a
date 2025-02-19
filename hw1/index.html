@@ -116,8 +116,7 @@ I learned a lot about the rasterization pipeline, and enjoyed the opportunity to
 			  </tr>
 			</table>
 		</div>
-		<p>At a sample rate of 1, comparing bilinear and nearest neighbour sampling, we see that there are very visible rectangles in nearest neighbour sampling, while this is not the case for nearest neigbhours sampling. When the sample rate is increased to 16, this is still the case, however it is less noticeable. We see that increasing the sample rate improves image quality, and the final result looks better with bilinear sampling.
-			</p>
+		<p>when the sampling rate is 1, we see that the edges are very pixelated, and the pixels aren't contiguous. When it's 4, we start to see some contiguity, but there are still jaggies, and edges aren't smooth. With a sample rate of 9 and 16, the edges start to look smooth, and there are fewer jaggies.</p>
 		<h2>Task 3: Transforms</h2>
 
 		<figure>
@@ -168,6 +167,7 @@ I learned a lot about the rasterization pipeline, and enjoyed the opportunity to
 				</td>
 			  </tr>
 			</table>
+			<p>At a sample rate of 1, comparing bilinear and nearest neighbour sampling, we see that there are very visible rectangles in nearest neighbour sampling, while this is not the case for nearest neigbhours sampling. When the sample rate is increased to 16, this is still the case, however it is less noticeable. We see that increasing the sample rate improves image quality, and the final result looks better with bilinear sampling.</p>
 		</div>
 		<h2>Task 6: "Level Sampling" with mipmaps for texture mapping</h2>
 		<p>Level sampling is used to determine the best mipmap level (resolution of the texture). It can be particularly helpful when an object is viewed at different scales (e.g., approaching the viewer). I implemented level sampling using mipmaps, which are precomputed versions of the original texture at different levels. We care about the mipmap level because it affects aliasing.</p>
