@@ -71,7 +71,27 @@ I learned a lot about the rasterization pipeline, and enjoyed the opportunity to
 			<figcaption>The image is zoomed in on the right vertex of the red triangle</figcaption>
 		</figure>		
 		<h2>Task 2: Antialiasing by Supersampling</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		
+		<p>
+        I wasn’t quite sure whether or not I should edit <code>sample_buffer</code> directly 
+        (which would arguably break a layer of abstraction) or use <code>fill_pixel</code> instead, 
+        but given the current design, I realised I had little choice in the matter, 
+        and that I’d have to edit the sample buffer.
+    </p>
+    <p>
+        The algorithm is quite similar to the algorithm in task 1, but I added two more nested 
+        <code>for</code> loops, which split each pixel up into <code>sqrt(r) x sqrt(r)</code> more pixels. 
+        For each of these smaller pixels, I check whether they’re in the triangle or not using 
+        methods described in task 1, and then fill the sample buffer accordingly. 
+    </p>
+    <p>
+        Then, in <code>resolve_to_frame_buffer</code>, for each pixel, I calculate the average 
+        colour amongst the <code>sqrt(r) x sqrt(r)</code> grid, and then fill the pixel with this colour.
+    </p>
+    <p>
+        Supersampling helps remove jaggies and is effective in anti-aliasing, but it is 
+        computationally expensive.
+    </p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
@@ -96,6 +116,8 @@ I learned a lot about the rasterization pipeline, and enjoyed the opportunity to
 			  </tr>
 			</table>
 		</div>
+		<p>At a sample rate of 1, comparing bilinear and nearest neighbour sampling, we see that there are very visible rectangles in nearest neighbour sampling, while this is not the case for nearest neigbhours sampling. When the sample rate is increased to 16, this is still the case, however it is less noticeable. We see that increasing the sample rate improves image quality, and the final result looks better with bilinear sampling.
+			</p>
 		<h2>Task 3: Transforms</h2>
 
 		<figure>
