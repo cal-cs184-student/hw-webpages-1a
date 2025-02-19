@@ -154,6 +154,30 @@ I learned a lot about the rasterization pipeline, and enjoyed the opportunity to
     <p>I used the implementation discussed in lecture/discussion, which involves estimating <span class="math">\frac{dv}{dx}, \frac{dv}{dy}, \frac{du}{dx}, \frac{du}{dy}</span> and finding the correct mipmap level accordingly.</p>
     <p>I implemented different sampling methods, such as always sampling from level 0, which is the original texture, the nearest mipmap
 
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="bilinear, bilinear.png" width="400px"/>
+				  <figcaption>Bilinear sampling + sample rate of 1</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="lzer_pnearest.png" width="400px"/>
+				  <figcaption>Bilinear sampling + sample rate of 16</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task5_nearest_1.png" width="400px"/>
+				  <figcaption>Nearest neighbour sampling + sample rate of 1</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task5_nearest_16.png" width="400px"/>
+				  <figcaption>Nearest neighbour sampling + sample rate of 16.</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 		<h2>Additional Notes (please remove)</h2>
 		<ul>
 			<li>You can also add code if you'd like as so: <code>code code code</code></li>
