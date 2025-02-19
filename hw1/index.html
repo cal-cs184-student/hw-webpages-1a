@@ -105,8 +105,8 @@ I learned a lot about the rasterization pipeline, and enjoyed the opportunity to
 			<figcaption>The figure is waving</figcaption>
 		</figure>
 		<h2>Task 4: Barycentric coordinates</h2>
-		<p>Barycentric coordinates describe points in <span class="math">\mathbb{R}^2</span> as the interpolation of a triangle’s three vertices. Every point in <span class="math">\mathbb{R}^2</span> can be described as <span class="math">(\alpha, \beta, \gamma)</span>, where <span class="math">\alpha + \beta + \gamma = 1</span>, and <span class="math">\alpha X_1 + \beta X_2 + \gamma X_3 = P</span>, where <span class="math">P</span> is the point in question. If <span class="math">\alpha, \beta, \gamma \geq 0</span>, a point must be inside the triangle.</p>
-    <p>I already used barycentric coordinates because of this property, so adding interpolation for colour was quite easy – I just had to weight each vertex’s colour by its respective barycentric coordinate.</p>
+		<p>Barycentric coordinates describe points in \( \mathbb{R}^2 \) as the interpolation of a triangle’s three vertices. Every point in \( \mathbb{R}^2 \) can be described as \( (\alpha, \beta, \gamma) \), where \( \alpha + \beta + \gamma = 1 \), and \( \alpha X_1 + \beta X_2 + \gamma X_3 = P \), where \( P \) is the point in question. If \( \alpha, \beta, \gamma \geq 0 \), a point must be inside the triangle.</p>
+		<p>I already used barycentric coordinates because of this property, so adding interpolation for colour was quite easy – I just had to weight each vertex’s colour by its respective barycentric coordinate.</p>
 		
 		<figure>
 			<img src="task4.png" alt="Lion" style="width:50%"/>
@@ -116,7 +116,15 @@ I learned a lot about the rasterization pipeline, and enjoyed the opportunity to
 		</p>
 			
 		<h2>Task 5: "Pixel sampling" for texture mapping</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>Pixel sampling is when the color of a pixel is chosen by sampling from a texture image. Two methods were implemented: nearest neighbor and bilinear interpolation.</p>
+		<p>In nearest neighbor sampling, we find the nearest texel to the given \( (U, V) \) coordinates and choose its color. In bilinear interpolation, we blend the colors of the nearest four texels.</p>
+		<p>Nearest neighbor sampling is faster but can result in pixelated images, while bilinear interpolation improves on this but is slower.</p>
+		<p>For both methods, we first scale to \( u \) and \( v \) coordinates by multiplying by the dimensions of the texture map. For the nearest neighbor sampling, we simply get the nearest texel. For bilinear interpolation, we do the following:</p>
+		<pre><code>
+	Color c0 = c00 * (dy) + c01 * (1 - dy);
+	Color c1 = c10 * (dy) + c11 * (1 - dy);
+	return c0 * (dx) + c1 * (1 - dx);
+		</code></pre>
 
 		<h2>Task 6: "Level Sampling" with mipmaps for texture mapping</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
