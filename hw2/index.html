@@ -32,85 +32,247 @@
 
 		<br>
 
-		Link to webpage: <a href="file:///Users/harshapolavaram/hw-webpages-1a/hw2/index.html">file:///Users/harshapolavaram/hw-webpages-1a/hw2/index.html</a>
+		Link to webpage: <a href="https://cal-cs184-student.github.io/hw-webpages-1a/hw2/index.html">https://cal-cs184-student.github.io/hw-webpages-1a/hw2/index.html</a>
 
 		<br>
 		
 		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/sp25-hw2-nowhereman">https://github.com/cal-cs184-student/sp25-hw2-nowhereman</a>
 
-		<figure>
-			<img src="teapot.png" alt="Teapot" style="width:50%"/>
-			<figcaption>You can add images with captions!</figcaption>
-		</figure>
+	
 
 		<!--
 		We've already added one heading per part, to make your write-up as navigable when grading. Please fit your write-up within these sections!
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
-
+		<p>In this homework, I created a program that manipulates 3D triangle meshes by using the half-edge data structure discussed in class. I also built bezier curve and surface interpolation.
+		</p>
 		<h2>Section I: Bezier Curves and Surfaces</h2>
 
 		<h3>Part 1: Bezier curves with 1D de Casteljau subdivision</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>In de Casteljau's algorithm, we have \( n \) control points, which describe how our curve should look. In each step of the algorithm, we take every 2 adjacent points \( p_1, p_2 \) (adjacent in the order they are described in)
+			and perform
 
-		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
+			\( 	{interp}(p_1, p_2, t) \).  In each step, the number of points decreases by 1. Then, when we arrive at one point, this point must be on the curve.
+			This curve is parameterized by \( t \), and sweeping it from 0 to 1 gives us the curve.
+
+		</p>
+
+			
+			
+
+		<figure>
+			<img src="HW2/Task 1/1.png" style="width:75%"/>
+			<figcaption>Step 0</figcaption>
+		</figure>
+		<figure>
+			<img src="HW2/Task 1/2.png" style="width:75%"/>
+			<figcaption>Step 1</figcaption>
+		</figure>
+		<figure>
+			<img src="HW2/Task 1/3.png" style="width:75%"/>
+			<figcaption>Step 2</figcaption>
+		</figure>
+		<figure>
+			<img src="HW2/Task 1/4.png" style="width:75%"/>
+			<figcaption>Step 3</figcaption>
+		</figure>
+
+		<figure>
+			<img src="HW2/Task 1/5.png" style="width:75%"/>
+			<figcaption>Step 4</figcaption>
+		</figure>
+		<figure>
+			<img src="HW2/Task 1/6.png" style="width:75%"/>
+			<figcaption>Step 4 + curve</figcaption>
+		</figure>
+
+		<figure>
+			<img src="HW2/Task 1/10.png" style="width:75%"/>
+			<figcaption>Control points changed</figcaption>
+		</figure>
+
+		
+
+		<h3>Part 2: Bezier surfaces with separable 1D de Casteljau</h3>
+		<p>For this task, we evaluate vectors in 3D instead of 2D. First, we create a method <code>evaluateStep</code> that extends task 1 to 3D vectors. Then, we implement <code>evaluate1D</code>, which performs all the necessary evaluation steps, and gives us a point on a Bezier curve. Lastly, we implement <code>evaluate</code>, which takes in two parameters \( u \) and \( v \). We first go through every row and evaluate the position of the Bezier curve at position \( u \). Then, using these control points, we evaluate the Bezier curve at position \( v \).</p>
+		
+		<figure>
+			<img src="HW2/Task 2/Screenshot 2025-02-27 at 4.34.13 PM.png" alt="Teapot" style="width:50%"/>
+			<figcaption>Teapot</figcaption>
+		</figure>
+		<h2>Section II: Triangle Meshes and Half-Edge Data Structure</h2>
+
+		<h3>Part 3: Area-weighted vertex normals</h3>
+		<p>Here, area-weighted vertex normals are implemented for Phong shading. This was implemented by iterating through all the faces adjacent to the vertex (this code is fairly similar to the code for iterating through all neighbouring vertices) and for each of these faces, we call <code>normal()</code> to get the direction normal to the face, and scale this by the area of the triangle, which was calculated using the shoelace theorem. We sum all of these vectors and lastly, this result is normalized.</p>
+
+		<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			<tr>
+			  <td style="text-align: center;">
+				<img src="HW2/Task 3/1.png" width="300px"/>
+				<figcaption>Flat Shading</figcaption>
+			  </td>
+			  <td style="text-align: center;">
+				  <img src="HW2/Task 3/2.png" width="300px"/>
+				<figcaption>Phong Shading</figcaption>
+			  </td>
+			</tr>
+
+
+		  </table>
+		
+
+
+		<h3>Part 4: Edge flip</h3>
+		<p>For this task, I essentially kept track of all vertices, edges, faces, and half-edges and what they were linked to before and after the edge flip. I first found all the half-edges, and using these, I found all edges, faces, and vertices. I then checked if we are on the boundary, and returned if we were. Then, I reassigned the half-edges linked to each vertex, face, and edge. Lastly, I used <code>setNeighbours</code> to reset all of the attributes of all the half-edges.</p>
+		<p>It’s likely that I didn’t have to reset all of these attributes, but I did so just to be safe and to ensure no bugs (which thankfully I didn’t have!).</p>		<table style="width: 100%; text-align: center; border-collapse: collapse;">
+
+
+		<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			<tr>
+				<td style="text-align: center;">
+				  <img src="HW2/Task 5/tor.png" width="300px"/>
+				  <figcaption>Original Torus</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="HW2/Task 4/toflip.png" width="300px"/>
+				  <figcaption>Edge flips</figcaption>
+				</td>
+			  </tr>
+			
+			<tr>
+				<td style="text-align: center;">
+				  <img src="HW2/Task 5/1.png" width="300px"/>
+				  <figcaption>Original Teapot</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="HW2/Task 4/flipped.png" width="300px"/>
+				  <figcaption>Edge flips</figcaption>
+				</td>
+			  </tr>
+			</table>
+		<h3>Part 5: Edge split</h3>
+		<p>Implementing edge splitting was quite similar to implementing edge flipping, in the sense that I still had to keep track of all vertices, edges, faces, and half-edges and what they were linked to before and after the edge split. I first found all the half-edges, and using these, I found all edges, faces, and vertices. I then checked if we are on the boundary, and returned if we were. Then, I created a new vertex and placed it on the median. I then created new faces, half-edges, and edges, and set the relevant <code>isNew</code> values to true (this was used in task 6). I then reassigned the half-edge attributes for all vertices, faces, and edges. Lastly, I used <code>setNeighbours</code> to reset all of the attributes of all the half-edges.</p>
+		<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			<tr>
+				<td style="text-align: center;">
+				  <img src="HW2/Task 5/tor.png" width="300px"/>
+				  <figcaption>Original Torus</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="HW2/Task 5/2.png" width="300px"/>
+				  <figcaption>Edge splits</figcaption>
+				</td>
+			  </tr>
+			
+			<tr>
+				<td style="text-align: center;">
+				  <img src="HW2/Task 5/1.png" width="300px"/>
+				  <figcaption>Original Teapot</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="HW2/Task 5/fs.png" width="300px"/>
+				  <figcaption>Edge flips + splits</figcaption>
+				</td>
+			  </tr>
+			</table>
+		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
+		<p>For this task, I implemented loop subdivision to increase the number of triangles in the mesh. First, I computed the new positions for all the vertices in the input mesh using the formula given. Then, I calculated the new vertex positions that would be created for edges that would split. While iterating through these edges, I stored all of the ones that existed in a vector, so that I could differentiate new and old edges and avoid infinite loops. I iterated over all edges of the original mesh, splitting each edge and storing whether each subdivided edge/vertex came from the original mesh or was new. Then, after splitting, I flipped any new edge that connected an old vertex to a new vertex. Lastly, I updated all vertex positions using the previously calculated positions.</p>
+
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="teapot.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="HW2/Task 6/icos1.png" width="400px"/>
+				  <figcaption>Upsampled 0 times.</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="teapot.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
-				</td>
+					<img src="HW2/Task 6/icos2.png" width="400px"/>
+					<figcaption>Upsampled 1 time.</figcaption>
+				  </td>
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="teapot.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+					<img src="HW2/Task 6/icos3.png" width="400px"/>
+					<figcaption>Upsampled 2 times.</figcaption>
+				  </td>
+
+				
+			  </tr>
+			</table>
+		</div>
+		<p> We see that the sharp corners round out as we upsample more and more. To prevent this, we can split edges around corners. In the following example, I split edges around only this one vertex, and we can see that when the mesh is upsampled, this corner is more prominent than the other ones. </p>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="HW2/Task 6/edge1.png" width="400px"/>
+				  <figcaption>Upsampled 0 times.</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="teapot.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
-				</td>
+					<img src="HW2/Task 6/edge2.png" width="400px"/>
+					<figcaption>Upsampled 1 time.</figcaption>
+				  </td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+					<img src="HW2/Task 6/edge3.png" width="400px"/>
+					<figcaption>Upsampled 2 times.</figcaption>
+				  </td>
+
+				
 			  </tr>
 			</table>
 		</div>
 
-		<h3>Part 2: Bezier surfaces with separable 1D de Casteljau</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="HW2/Task 6/1.png" width="400px"/>
+				  <figcaption>Upsampled 0 times.</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="HW2/Task 6/2.png" width="400px"/>
+					<figcaption>Upsampled 1 time.</figcaption>
+				  </td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+					<img src="HW2/Task 6/3.png" width="400px"/>
+					<figcaption>Upsampled 2 times.</figcaption>
+				  </td>
 
-		<h2>Section II: Triangle Meshes and Half-Edge Data Structure</h2>
+				
+			  </tr>
+			</table>
+		</div>
+		<p>In this example, we see the cube, when it’s upsampled, is not symmetric. It instead has a sort of shear. The reason for this is that the diagonal edges are asymmetric, and when loop subdivision occurs, the new edges are also asymmetric. To avoid this, we can create another diagonal edge on each face as shown below, and the result is a lot more symmetric. 
+		</p>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="HW2/Task 6/4.png" width="400px"/>
+				  <figcaption>Upsampled 0 times.</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="HW2/Task 6/5.png" width="400px"/>
+					<figcaption>Upsampled 1 time.</figcaption>
+				  </td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+					<img src="HW2/Task 6/6.png" width="400px"/>
+					<figcaption>Upsampled 2 times.</figcaption>
+				  </td>
 
-		<h3>Part 3: Area-weighted vertex normals</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				
+			  </tr>
+			</table>
+		</div>
+		
 
-		<h3>Part 4: Edge flip</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-		<h3>Part 5: Edge split</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-		<h2>(Optional) Section III: Potential Extra Credit - Art Competition: Model something Creative</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-		<h2>Additional Notes (please remove)</h2>
-		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
-		</ul>
 		</div>
 	</body>
 </html>
