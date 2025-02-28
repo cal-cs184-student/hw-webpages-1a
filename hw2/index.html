@@ -95,7 +95,7 @@
 		
 
 		<h3>Part 2: Bezier surfaces with separable 1D de Casteljau</h3>
-		<p>For this task, we evaluate vectors in 3D instead of 2D. First, we create a method <code>evaluateStep</code> that extends task 1 to 3D vectors. Then, we implement <code>evaluate1D</code>, which performs all the necessary evaluation steps, and gives us a point on a Bezier curve. Lastly, we implement <code>evaluate</code>, which takes in two parameters \( u \) and \( v \). We first go through every row and evaluate the position of the Bezier curve at position \( u \). Then, using these control points, we evaluate the Bezier curve at position \( v \).</p>
+		<p>For this task, we evaluate vectors in 3D instead of 2D. First, we create a method <code>evaluateStep</code> that extends task 1 to 3D vectors. Then, we implement <code>evaluate1D</code>, which performs all the necessary evaluation steps, and gives us a point on a Bezier curve. Lastly, we implement <code>evaluate</code>, which takes in two parameters \( u \) and \( v \). We first go through every row and evaluate the position of a point on the Bezier curve with parameter \( u \). Then, using these control points, we evaluate the position of the point on the Bezier curve with parameter \( v \).</p>
 		
 		<figure>
 			<img src="HW2_new/Task 2/Screenshot 2025-02-27 at 4.34.13 PM.png" alt="Teapot" style="width:50%"/>
